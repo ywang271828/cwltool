@@ -450,6 +450,8 @@ class ResearchObject:
                         self.add_tagfile(path, timestamp)
                     except PermissionError:
                         pass  # FIXME: avoids duplicate snapshotting; need better solution
+                    except FileExistsError:
+                        _logger.warning(f"Failure in copy. Destination already exists! %s", path)
             elif key in ("secondaryFiles", "listing"):
                 for files in cast(MutableSequence[CWLObjectType], value):
                     if isinstance(files, MutableMapping):
